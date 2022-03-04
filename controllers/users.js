@@ -61,3 +61,23 @@ module.exports.getUser = (req, res, next) => User.findById(req.user._id)
     res.status(200).send(user);
   })
   .catch(next);
+
+// Обновление данных пользователя
+module.exports.updateUser = (req, res, next) => User.findByIdAndUpdate(
+  req.user._id,
+  { name: req.body.name, email: req.body.email },
+  { new: true, runValidators: true },
+)
+  .orFail(() => {
+    next(new NotFoundError('Пользователь с таким _id не найден'));
+  })
+  .then((user) => {
+    res.status(200).send(user);
+  })
+  .catch((err) => {
+    if (err.name === 'ValidationError') {
+      next(new BadRequestError('Переданы некорректные данные при обновлении данных пользователя'));
+    } else {
+      next(err);
+    }
+  });
