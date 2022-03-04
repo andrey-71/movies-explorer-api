@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 const isEmail = require('validator/lib/isEmail');
+const UnauthorizedError = require('../errors/UnauthorizedError');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -20,8 +22,28 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    // select: false,
+    select: false,
   },
 });
+
+// Статичный метод для поиска по email и сравнения пароля
+userSchema.statics.findUserByCredentials = function (email, password) {
+  return this.findOne({ email })
+    .select('+password')
+    .then((user) => {
+      if (!user) {
+        throw new UnauthorizedError('Пользователь c таким email не найден');
+      }
+
+      return bcrypt.compare(password, user.password)
+        .then((matched) => {
+          if (!matched) {
+            throw new UnauthorizedError('Неверный пароль');
+          }
+
+          return user;
+        });
+    });
+};
 
 module.exports = mongoose.model('user', userSchema);
