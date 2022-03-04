@@ -46,4 +46,12 @@ userSchema.statics.findUserByCredentials = function (email, password) {
     });
 };
 
+// Метод для удаления пароля из тела ответа
+userSchema.methods.toJSON = function () {
+  const obj = this.toObject();
+  delete obj.password;
+
+  return obj;
+};
+
 module.exports = mongoose.model('user', userSchema);
