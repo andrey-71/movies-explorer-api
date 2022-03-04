@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const BadRequestError = require('../errors/BadRequestError');
 const ConflictError = require('../errors/ConflictError');
+const NotFoundError = require('../errors/NotFoundError');
 
 // Регистрация пользователя
 module.exports.createUser = (req, res, next) => {
@@ -50,3 +51,13 @@ module.exports.loginUser = (req, res, next) => {
 
     .catch(next);
 };
+
+// Получение данных пользователя
+module.exports.getUser = (req, res, next) => User.findById(req.user._id)
+  .orFail(() => {
+    next(new NotFoundError('Пользователь не найден'));
+  })
+  .then((user) => {
+    res.status(200).send(user);
+  })
+  .catch(next);
