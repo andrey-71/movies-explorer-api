@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const { PORT, DB_ADDRESS } = require('./utils/config');
-const { createUser } = require('./controllers/users');
+const { createUser, loginUser } = require('./controllers/users');
 
 const app = express();
 // Подключение к БД
@@ -15,7 +15,8 @@ mongoose.connect(DB_ADDRESS, {
 app.use(bodyParser.json());
 
 // Роут регистрации
-app.post('/signup', signupValidation, createUser);
+app.post('/signup', createUser);
+app.post('/signin', loginUser);
 
 // Запуск сервера
 app.listen(PORT, () => {
