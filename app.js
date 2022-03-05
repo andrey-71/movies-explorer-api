@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const { PORT, DB_ADDRESS } = require('./utils/config');
 const routes = require('./routes');
 const { createUser, loginUser } = require('./controllers/users');
+const errorHandler = require('./middlewares/error-handler');
 
 const app = express();
 // Подключение к БД
@@ -20,6 +21,9 @@ app.post('/signup', createUser);
 app.post('/signin', loginUser);
 // Защищенные роуты
 app.use(routes);
+
+// Обработчик ошибок
+app.use(errorHandler);
 
 // Запуск сервера
 app.listen(PORT, () => {
