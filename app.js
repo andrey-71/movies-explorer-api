@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const { PORT, DB_ADDRESS } = require('./utils/config');
+const routes = require('./routes');
 const { createUser, loginUser } = require('./controllers/users');
 
 const app = express();
@@ -17,6 +18,8 @@ app.use(bodyParser.json());
 // Роут регистрации
 app.post('/signup', createUser);
 app.post('/signin', loginUser);
+// Защищенные роуты
+app.use(routes);
 
 // Запуск сервера
 app.listen(PORT, () => {
