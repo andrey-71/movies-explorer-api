@@ -9,6 +9,7 @@ const routes = require('./routes');
 const { createUser, loginUser } = require('./controllers/users');
 const { signupValidation, signinValidation } = require('./middlewares/joi-validation');
 const auth = require('./middlewares/auth');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 const errorHandler = require('./middlewares/error-handler');
 
 const app = express();
@@ -21,6 +22,8 @@ mongoose.connect(DB_ADDRESS, {
 app.use(bodyParser.json());
 // Парсер кук
 app.use(cookieParser());
+// Логгер запросов
+app.use(requestLogger);
 
 // Роут регистрации
 app.post('/signup', signupValidation, createUser);
@@ -30,6 +33,8 @@ app.use(auth);
 // Защищенные роуты
 app.use(routes);
 
+// Логгер ошибок
+app.use(errorLogger);
 // Обработчик ошибок celebrate
 app.use(errors());
 // Обработчик ошибок
