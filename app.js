@@ -2,6 +2,7 @@ const express = require('express');
 require('dotenv').config();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const { PORT, DB_ADDRESS } = require('./utils/config');
@@ -17,6 +18,17 @@ const app = express();
 mongoose.connect(DB_ADDRESS, {
   useNewUrlParser: true,
 });
+
+// CORS
+const corsOptions = {
+  origin: [
+    'https://movies-explorer.andrey-g.nomoredomains.work',
+    'http://movies-explorer.andrey-g.nomoredomains.work',
+    'http://localhost:3001',
+  ],
+  credentials: true,
+};
+app.use(cors(corsOptions));
 
 // Сборка данных в JSON-формат
 app.use(bodyParser.json());
