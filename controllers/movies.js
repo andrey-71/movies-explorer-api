@@ -9,7 +9,7 @@ module.exports.getMovies = (req, res, next) => Movie.find({})
   .catch(next);
 
 // Добавление нового фильма
-module.exports.createMovies = (req, res, next) => Movie.create({
+module.exports.createMovie = (req, res, next) => Movie.create({
   movieId: req.body.movieId,
   nameRU: req.body.nameRU,
   nameEN: req.body.nameEN,
