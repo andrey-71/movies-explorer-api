@@ -31,3 +31,20 @@ module.exports.createMovies = (req, res, next) => Movie.create({
       next(err);
     }
   });
+
+// Удаление фильма
+module.exports.deleteMovie = (req, res, next) => Movie.findById(req.params.id)
+  .orFail(() => {
+    next(new NotFoundError('Фильм с указанным _id не найдена'));
+  })
+  .then((movie) => {
+    Movie.findByIdAndRemove(req.params.id)
+      .then(() => res.status(200).send(movie));
+  })
+  .catch((err) => {
+    if (err.name === 'CastError') {
+      next(new BadRequestError('Переданы некорректные данные при удалении фильма'));
+    } else {
+      next(err);
+    }
+  });
