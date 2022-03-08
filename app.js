@@ -3,9 +3,11 @@ require('dotenv').config();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+const { errors } = require('celebrate');
 const { PORT, DB_ADDRESS } = require('./utils/config');
 const routes = require('./routes');
 const { createUser, loginUser } = require('./controllers/users');
+const { signupValidation, signinValidation } = require('./middlewares/joi-validation');
 const auth = require('./middlewares/auth');
 const errorHandler = require('./middlewares/error-handler');
 
@@ -21,13 +23,15 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 // Роут регистрации
-app.post('/signup', createUser);
-app.post('/signin', loginUser);
+app.post('/signup', signupValidation, createUser);
+app.post('/signin', signinValidation, loginUser);
 // Мидлвэр авторизации
 app.use(auth);
 // Защищенные роуты
 app.use(routes);
 
+// Обработчик ошибок celebrate
+app.use(errors());
 // Обработчик ошибок
 app.use(errorHandler);
 
