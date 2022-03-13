@@ -1,4 +1,4 @@
-const {celebrate, Joi} = require('celebrate');
+const { celebrate, Joi } = require('celebrate');
 
 const regexLink = /https?:\/\/(www)?[a-z0-9\S]+\.[a-zа-яё]{2,}[a-z0-9\S]*/;
 
