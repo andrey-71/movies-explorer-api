@@ -5,7 +5,9 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
-const { PORT, DB_ADDRESS } = require('./utils/config');
+
+const { NODE_ENV, PORT, DB_ADDRESS } = process.env;
+const { DEV_PORT, DEV_DB_ADDRESS } = require('./utils/config');
 const routes = require('./routes');
 const { createUser, loginUser } = require('./controllers/users');
 const { signupValidation, signinValidation } = require('./middlewares/joi-validation');
@@ -15,7 +17,7 @@ const errorHandler = require('./middlewares/error-handler');
 
 const app = express();
 // Подключение к БД
-mongoose.connect(DB_ADDRESS, {
+mongoose.connect(`${NODE_ENV === 'production' ? DB_ADDRESS : DEV_DB_ADDRESS}`, {
   useNewUrlParser: true,
 });
 
@@ -53,6 +55,6 @@ app.use(errors());
 app.use(errorHandler);
 
 // Запуск сервера
-app.listen(PORT, () => {
-  console.log(`App started on port ${PORT}`);
+app.listen(NODE_ENV === 'production' ? PORT : DEV_PORT, () => {
+  console.log(`App started on port ${NODE_ENV === 'production' ? PORT : DEV_PORT}`);
 });
