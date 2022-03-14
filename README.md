@@ -3,7 +3,7 @@
 
 
 ### Адрес сервера:
-https://movies-explorer.andrey-g.nomoredomains.work
+https://api.movies-explorer.and-g.nomoredomains.work
 
-###IP-сервера:
+### IP-сервера:
 178.154.240.113
