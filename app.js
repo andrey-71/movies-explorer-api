@@ -6,6 +6,8 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 
+const limiter = require('./middlewares/rate-limiter');
+
 const { NODE_ENV, PORT, DB_ADDRESS } = process.env;
 const { DEV_PORT, DEV_DB_ADDRESS } = require('./utils/config');
 const routes = require('./routes');
@@ -36,6 +38,8 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 // Парсер кук
 app.use(cookieParser());
+// Ограничение кол-ва запросов
+app.use(limiter);
 // Логгер запросов
 app.use(requestLogger);
 
