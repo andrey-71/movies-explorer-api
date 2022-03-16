@@ -39,7 +39,6 @@ module.exports.loginUser = (req, res, next) => {
         `${NODE_ENV === 'production' ? JWT_SECRET : DEV_JWT_SECRET}`,
         { expiresIn: '7d' },
       );
-      console.log(JWT_SECRET);
       // Запись токена в куки
       res.cookie('jwt', token, {
         maxAge: 3600000 * 24 * 7,

@@ -11,9 +11,6 @@ const limiter = require('./middlewares/rate-limiter');
 const { NODE_ENV, PORT, DB_ADDRESS } = process.env;
 const { DEV_PORT, DEV_DB_ADDRESS } = require('./utils/config');
 const routes = require('./routes');
-const { createUser, loginUser } = require('./controllers/users');
-const { signupValidation, signinValidation } = require('./middlewares/joi-validation');
-const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const errorHandler = require('./middlewares/error-handler');
 
@@ -43,12 +40,7 @@ app.use(limiter);
 // Логгер запросов
 app.use(requestLogger);
 
-// Роут регистрации
-app.post('/signup', signupValidation, createUser);
-app.post('/signin', signinValidation, loginUser);
-// Мидлвэр авторизации
-app.use(auth);
-// Защищенные роуты
+// Роуты
 app.use(routes);
 
 // Логгер ошибок
