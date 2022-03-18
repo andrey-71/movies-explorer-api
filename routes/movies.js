@@ -4,6 +4,6 @@ const { movieInfoValidation, movieIdValidation } = require('../middlewares/joi-v
 
 router.get('/', getMovies);
 router.post('/', movieInfoValidation, createMovie);
-router.delete('/:id', movieIdValidation, deleteMovie);
+router.delete('/:_id', movieIdValidation, deleteMovie);
 
 module.exports = router;
