@@ -64,7 +64,7 @@ module.exports.getUser = (req, res, next) => User.findById(req.user._id)
     next(new NotFoundError('Пользователь не найден'));
   })
   .then((user) => {
-    res.status(200).send(user);
+    res.send(user);
   })
   .catch(next);
 
@@ -78,7 +78,7 @@ module.exports.updateUser = (req, res, next) => User.findByIdAndUpdate(
     next(new NotFoundError('Пользователь с таким _id не найден'));
   })
   .then((user) => {
-    res.status(200).send(user);
+    res.send(user);
   })
   .catch((err) => {
     if (err.name === 'ValidationError') {

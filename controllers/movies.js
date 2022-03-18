@@ -6,7 +6,7 @@ const ForbiddenError = require('../errors/ForbiddenError');
 // Получение всех фильмов пользователя
 module.exports.getMovies = (req, res, next) => Movie.find({})
   .then((movies) => {
-    res.status(200).send(movies);
+    res.send(movies);
   })
   .catch(next);
 
@@ -41,7 +41,7 @@ module.exports.deleteMovie = (req, res, next) => {
     .then((movie) => {
       if (req.user._id.toString() === movie.owner.toString()) {
         return movie.remove()
-          .then(() => res.status(200).send({message: 'Фильм удалён'}));
+          .then(() => res.send({message: 'Фильм удалён'}));
       }
       throw new ForbiddenError('Вы можете удалить только свой фильм');
     })
