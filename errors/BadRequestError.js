@@ -1,9 +1,11 @@
-class BadReuestError extends Error {
+const { BADREQUEST_ERROR } = require('../utils/statusErrors');
+
+class BadRequestError extends Error {
   constructor(message) {
     super(message);
 
-    this.statusCode = 400;
+    this.statusCode = BADREQUEST_ERROR;
   }
 }
 
-module.exports = BadReuestError;
+module.exports = BadRequestError;
