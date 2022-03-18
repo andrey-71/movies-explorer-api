@@ -4,7 +4,7 @@ const regexLink = /https?:\/\/(www)?[a-z0-9\S]+\.[a-zа-яё]{2,}[a-z0-9\S]*/;
 
 module.exports.signupValidation = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
+    name: Joi.string().required().min(2).max(30),
     email: Joi.string().required().email(),
     password: Joi.string().required(),
   }),
