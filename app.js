@@ -35,10 +35,10 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 // Парсер кук
 app.use(cookieParser());
-// Ограничение кол-ва запросов
-app.use(limiter);
 // Логгер запросов
 app.use(requestLogger);
+// Ограничение кол-ва запросов
+app.use(limiter);
 
 // Роуты
 app.use(routes);
