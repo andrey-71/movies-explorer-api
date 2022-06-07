@@ -25,7 +25,7 @@ const corsOptions = {
   origin: [
     'https://movies-explorer.andrey-g.nomoredomains.work',
     'http://movies-explorer.andrey-g.nomoredomains.work',
-    'http://localhost:3001',
+    'http://localhost:3002',
   ],
   credentials: true,
 };
@@ -38,7 +38,7 @@ app.use(cookieParser());
 // Логгер запросов
 app.use(requestLogger);
 // Ограничение кол-ва запросов
-app.use(limiter);
+// app.use(limiter); !!! --- Включить после наладки --- !!!
 
 // Роуты
 app.use(routes);
