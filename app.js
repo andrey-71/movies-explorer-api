@@ -25,7 +25,7 @@ const corsOptions = {
   origin: [
     'https://movies-explorer.andrey-g.nomoredomains.work',
     'http://movies-explorer.andrey-g.nomoredomains.work',
-    'http://localhost:3001',
+    'http://localhost:3002',
   ],
   credentials: true,
 };

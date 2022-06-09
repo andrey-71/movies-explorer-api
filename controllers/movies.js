@@ -6,7 +6,7 @@ const ForbiddenError = require('../errors/ForbiddenError');
 // Получение всех фильмов пользователя
 module.exports.getMovies = (req, res, next) => Movie.find({})
   .then((movies) => {
-    res.send(movies);
+    res.send(movies.filter(movie => movie.owner.toString() === req.user._id.toString()));
   })
   .catch(next);
 
