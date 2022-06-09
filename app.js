@@ -38,7 +38,7 @@ app.use(cookieParser());
 // Логгер запросов
 app.use(requestLogger);
 // Ограничение кол-ва запросов
-// app.use(limiter); !!! --- Включить после наладки --- !!!
+app.use(limiter);
 
 // Роуты
 app.use(routes);
