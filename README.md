@@ -8,7 +8,7 @@ ___
 
 ## Ссылки:
 * API: https://api.movies-explorer.and-g.nomoredomains.work
-* IP-адрес сервера: 178.154.240.113
+* IP-адрес сервера: 194.87.93.117
 ___
 
 ## Функционал:
